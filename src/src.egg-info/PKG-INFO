@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: src
+Version: 0.0.1
+Summary: An MLOPs project for productioning model
+Author: Krunal Bhammar
+Author-email: Krunal Bhammar <krunalahir0538@gmail.com>
+Dynamic: author
