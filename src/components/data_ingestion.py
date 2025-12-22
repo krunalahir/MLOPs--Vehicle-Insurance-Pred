@@ -22,7 +22,7 @@ class DataIngestion:
             raise MyException(e,sys)
 
 
-    def export_data_into_feature_store(self)-> dataframe:
+    def export_data_into_feature_store(self)-> DataFrame:
         """
         Method Name:export_data_into_feature_store
         Description: This method exports data from mongodb to csv file
@@ -38,7 +38,7 @@ class DataIngestion:
             feature_store_file_path=self.data_ingestion_config.feature_store_file_path
             dir_path=os.path.dirname(feature_store_file_path)
             os.makedirs(dir_path, exist_ok=True)
-            logging_info(f"saving dataframe to {feature_store_file_path}")
+            logging.info(f"saving dataframe to {feature_store_file_path}")
             dataframe.to_csv(feature_store_file_path,index=False,header=True)
             return dataframe
 
@@ -56,8 +56,19 @@ class DataIngestion:
         logging.info("Entered split_data_as_train_test method of Data_Ingestion class")
 
         try:
-            train_set, test_set = train_test_split(dataframe,test_size=self.data_ingestion_config.train_test_split_ratio)
-            logging.info("Performed train test split on the dataframe")
+            # Check if dataframe is empty
+            if dataframe.empty:
+                logging.warning("Dataframe is empty, creating empty train and test files")
+                dir_path = os.path.dirname(self.data_ingestion_config.training_file_path)
+                os.makedirs(dir_path, exist_ok=True)
+
+                # Create empty CSV files
+                dataframe.to_csv(self.data_ingestion_config.training_file_path, index=False, header=True)
+                dataframe.to_csv(self.data_ingestion_config.testing_file_path, index=False, header=True)
+            else:
+                train_set, test_set = train_test_split(dataframe,test_size=self.data_ingestion_config.train_test_split_ratio)
+                logging.info("Performed train test split on the dataframe")
+
             logging.info(
                 "Exited split_data_as_train_test method of Data_Ingestion class"
             )
@@ -65,8 +76,13 @@ class DataIngestion:
             os.makedirs(dir_path, exist_ok=True)
 
             logging.info(f"Exporting train and test file path.")
-            train_set.to_csv(self.data_ingestion_config.training_file_path, index=False, header=True)
-            test_set.to_csv(self.data_ingestion_config.testing_file_path, index=False, header=True)
+            if not dataframe.empty:
+                train_set.to_csv(self.data_ingestion_config.training_file_path, index=False, header=True)
+                test_set.to_csv(self.data_ingestion_config.testing_file_path, index=False, header=True)
+            else:
+                # Save the empty dataframe to both train and test files
+                dataframe.to_csv(self.data_ingestion_config.training_file_path, index=False, header=True)
+                dataframe.to_csv(self.data_ingestion_config.testing_file_path, index=False, header=True)
 
             logging.info(f"Exported train and test file path.")
         except Exception as e:

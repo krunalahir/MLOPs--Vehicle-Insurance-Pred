@@ -3,7 +3,7 @@ from datetime import date
 
 # For MongoDB connection
 DATABASE_NAME = "Proj1"
-COLLECTION_NAME = "Proj1-Data"
+COLLECTION_NAME = "Proj1_Data"
 MONGODB_URL_KEY = "MONGODB_URL"
 
 PIPELINE_NAME: str = ""
