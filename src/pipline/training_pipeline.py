@@ -6,8 +6,8 @@ from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
-#from src.components.model_evaluation import ModelEvaluation
-#from src.components.model_pusher import ModelPusher
+from src.components.model_evaluation import ModelEvaluation
+from src.components.model_pusher import ModelPusher
 
 from src.entity.config_entity import (DataIngestionConfig,
                                       DataValidationConfig,
@@ -19,9 +19,9 @@ from src.entity.config_entity import (DataIngestionConfig,
 from src.entity.artifact_entity import (DataIngestionArtifact,
                                         DataValidationArtifact,
                                         DataTransformationArtifact,
-                                        ModelTrainerArtifact)
-                                       # ModelEvaluationArtifact,
-                                        #ModelPusherArtifact)
+                                        ModelTrainerArtifact,
+                                        ModelEvaluationArtifact,
+                                        ModelPusherArtifact)
 
 
 class TrainPipeline:
@@ -30,6 +30,8 @@ class TrainPipeline:
         self.data_validation_config = DataValidationConfig()
         self.data_transformation_config = DataTransformationConfig()
         self.model_trainer_config = ModelTrainerConfig()
+        self.model_evaluation_config = ModelEvaluationConfig()
+        self.model_pusher_config = ModelPusherConfig()
 
 
     def start_data_ingestion(self) -> DataIngestionArtifact:

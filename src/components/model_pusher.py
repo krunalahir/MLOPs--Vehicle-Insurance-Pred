@@ -32,7 +32,7 @@ class ModelPusher:
             logging.info("Uploading artifacts folder to s3 bucket")
 
             logging.info("Uploading new model of s3 to s3 bucket")
-            self.proj1_estimatore.save_model(from_file=self.model_evaluation_artifact.trained_model_path)
+            self.proj1_estimator.save_model(from_file=self.model_evaluation_artifact.trained_model_path)
             model_pusher_artifact=ModelPusherArtifact(bucket_name=self.model_pusher_config.bucket_name,
                                                   s3_model_path=self.model_pusher_config.s3_model_key_path)
             logging.info("Uploaded artifacts folder to s3 bucket")

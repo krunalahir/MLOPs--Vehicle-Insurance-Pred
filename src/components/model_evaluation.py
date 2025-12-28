@@ -104,9 +104,9 @@ class ModelEvaluation:
             x=self._rename_columns(x)
             x=self._drop_id_column(x)
 
-            trained_model=load_object(file_path=self.model_trainer_artifact.trained_model_path)
+            trained_model=load_object(file_path=self.model_trainer_artifact.trained_model_file_path)
             logging.info("Trained model loaded")
-            trained_mode_f1_score=self.model_trainer_artifact.trained_model_f1_score
+            trained_model_f1_score=self.model_trainer_artifact.metric_artifact.f1_score
             logging.info("Trained model f1 score calculated")
 
             best_model_f1_score=None
@@ -140,7 +140,7 @@ class ModelEvaluation:
         try:
             logging.info("initiating model evaluatioin pipeline")
             evaluate_model_response=self.evaluate_model()
-            s3_model_path=self.model_eval_config.s3_model_path
+            s3_model_path=self.model_eval_config.s3_model_key_path
 
             model_evaluation_artifact=ModelEvaluationArtifact(
                 is_model_accepted=evaluate_model_response.is_model_accepted,

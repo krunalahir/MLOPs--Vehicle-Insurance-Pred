@@ -24,7 +24,7 @@ class S3Client:
                                                 region_name=region_name
                                                 )
 
-            S3Client.s3_client = boto3.('s3',
+            S3Client.s3_client = boto3.client('s3',
                                         aws_access_key_id=__access_key_id,
                                         aws_secret_access_key=__secret_access_key,
                                         region_name=region_name
